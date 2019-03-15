@@ -16,53 +16,10 @@ const models: TsoaRoute.Models = {
             "email": { "dataType": "string", "required": true },
         },
     },
-    "UserUpdateRequest": {
-        "properties": {
-            "createdAt": { "dataType": "datetime" },
-            "email": { "dataType": "string", "required": true },
-        },
-    },
 };
 const validationService = new ValidationService(models);
 
 export function RegisterRoutes(app: express.Express) {
-    app.get('/v1/Users/Current',
-        function(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new UsersController();
-
-
-            const promise = controller.Current.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.get('/v1/Users/:userId',
-        function(request: any, response: any, next: any) {
-            const args = {
-                userId: { "in": "path", "name": "userId", "required": true, "dataType": "double" },
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new UsersController();
-
-
-            const promise = controller.Get.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
     app.post('/v1/Users',
         function(request: any, response: any, next: any) {
             const args = {
@@ -80,44 +37,6 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.Create.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.delete('/v1/Users/:userId',
-        function(request: any, response: any, next: any) {
-            const args = {
-                userId: { "in": "path", "name": "userId", "required": true, "dataType": "double" },
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new UsersController();
-
-
-            const promise = controller.Delete.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.patch('/v1/Users',
-        function(request: any, response: any, next: any) {
-            const args = {
-                request: { "in": "body", "name": "request", "required": true, "ref": "UserUpdateRequest" },
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new UsersController();
-
-
-            const promise = controller.Update.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
 
