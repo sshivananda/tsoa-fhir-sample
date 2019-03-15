@@ -1,6 +1,5 @@
 /* tslint:disable */
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
-import { AccountsController } from './controllers/accountsController';
 import { UsersController } from './controllers/usersController';
 import * as express from 'express';
 
@@ -10,15 +9,6 @@ const models: TsoaRoute.Models = {
             "id": { "dataType": "double", "required": true },
             "email": { "dataType": "string", "required": true },
             "createdAt": { "dataType": "datetime", "required": true },
-        },
-    },
-    "TestAccount": {
-        "properties": {
-            "id": { "dataType": "double", "required": true },
-            "address": { "dataType": "string" },
-            "name": { "dataType": "string", "required": true },
-            "users": { "dataType": "array", "array": { "ref": "User" } },
-            "fields": { "dataType": "array", "array": { "dataType": "string" } },
         },
     },
     "UserCreateRequest": {
@@ -36,42 +26,6 @@ const models: TsoaRoute.Models = {
 const validationService = new ValidationService(models);
 
 export function RegisterRoutes(app: express.Express) {
-    app.get('/v1/Accounts/Current',
-        function(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new AccountsController();
-
-
-            const promise = controller.current.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.get('/v1/Accounts/Users',
-        function(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new AccountsController();
-
-
-            const promise = controller.getUsers.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
     app.get('/v1/Users/Current',
         function(request: any, response: any, next: any) {
             const args = {

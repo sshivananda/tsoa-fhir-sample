@@ -1,4 +1,3 @@
-import './controllers/accountsController';
 import './controllers/usersController';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
